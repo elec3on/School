@@ -15,7 +15,6 @@ public class Faculty {
     private String color;
 
     @OneToMany(mappedBy = "faculty")
-    @JsonIgnore
     private List<Student> students = new ArrayList<>();
 
     public Faculty() {
