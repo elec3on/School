@@ -3,9 +3,12 @@ package ru.hogwarts.school.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class FacultyService {
@@ -46,4 +49,14 @@ public class FacultyService {
     public Collection<Faculty> findByColor(String color) {
         return facultyRepository.findByColor(color);
     }
+
+    public Collection<Faculty> findByNameOrColor(String search) {
+        return facultyRepository.findByNameContainingIgnoreCaseOrColorContainingIgnoreCase(search, search);
+    }
+
+    public List<Student> getStudentsByFaculty(long facultyId) {
+        Faculty faculty = facultyRepository.findById(facultyId).orElse(null);
+        return faculty == null ? Collections.emptyList() : faculty.getStudents();
+    }
+
 }
