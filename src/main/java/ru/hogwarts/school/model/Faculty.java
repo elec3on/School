@@ -1,6 +1,10 @@
 package ru.hogwarts.school.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Faculty {
@@ -10,7 +14,9 @@ public class Faculty {
     private String name;
     private String color;
 
-    // Пустой конструктор обязателен для Hibernate
+    @OneToMany(mappedBy = "faculty")
+    private List<Student> students = new ArrayList<>();
+
     public Faculty() {
     }
 
@@ -42,5 +48,13 @@ public class Faculty {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 }
